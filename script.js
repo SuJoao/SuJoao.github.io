@@ -11,6 +11,23 @@ function stripHtml(html) {
   return tempDiv.textContent || tempDiv.innerText || "";
 }
 
+function applyStyle(command, value = null) {
+    document.execCommand(command, false, value);
+}
+
+function applyTextSize() {
+  const size = document.getElementById('textSizePicker').value;
+  let fontSize;
+  if (size === 'small') fontSize = '10px';
+  else if (size === 'normal') fontSize = '16px';
+  else if (size === 'big') fontSize = '24px';
+  document.execCommand('fontSize', false, '7'); // Use a placeholder size
+  const spans = document.getElementsByTagName('font');
+  for (let span of spans) {
+    if (span.size === '7') span.style.fontSize = fontSize;
+  }
+}
+
 function updateTabs() {
   const tabs = document.getElementById("tabs");
   tabs.innerHTML = "";
