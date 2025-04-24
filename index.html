@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Notetly</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="script.js"></script>
+
+</head>
+<body>
+  <div class="sidebar">
+    <button class="btn btn-outline-primary mb-2" onclick="showMainMenu()"><i class="fa-solid fa-house"></i> Home</button>
+    <button class="btn btn-primary mb-2" onclick="newNote()"><i class="fa-solid fa-pencil"></i> New</button>
+    <div id="tabs"></div>
+    <hr>
+    <button class="btn btn-outline-primary mb-2" onclick="toggleWorksplace()"><i class="fa-solid fa-building"></i> Worksplace</button>
+    <div id="worksplaceContainer" style="display: none; margin-bottom:1rem;"></div>
+    <button class="btn btn-outline-primary mb-2" onclick="togglePins()"><i class="fa-solid fa-thumbtack"></i> Pins</button>
+    <div id="pinsContainer" style="display: none; margin-bottom:1rem;"></div>
+    <button class="btn btn-outline-secondary mb-2" onclick="showTrash()"><i class="fa-solid fa-trash-can"></i> Trash</button>
+  </div>
+
+  <div class="content">
+    <div id="mainMenu" class="note-list">
+      <input type="text" class="form-control mb-3" placeholder="Search...">
+      <div class="d-flex justify-content-center gap-2 mb-3">
+        <button class="btn btn-outline-primary" onclick="showAllNotes()"><i class="fa-solid fa-book"></i> All Notes</button>
+        <button class="btn btn-outline-primary" onclick="filterFavorites()"><i class="fa-solid fa-thumbtack"></i> Pins</button>
+      </div>
+      <div class="row" id="mainCards"></div>
+    </div>
+
+    <div id="categoryNotesView" class="note-list" style="display: none;">
+      <button class="btn btn-outline-secondary mb-3" onclick="showMainMenu()">← Back to Main</button>
+      <div class="row" id="categoryNotes"></div>
+    </div>
+
+    <div id="noteEditor" class="note-editor">
+      <!-- Top bar: Title, Formatting/Stylization, and Save Button -->
+      <div class="d-flex justify-content-between align-items-center mb-3 border-bottom pb-2">
+        <!-- Left side: Title -->
+        <div class="me-3" style="flex: 0 0 30%;">
+          <input type="text" id="noteTitle" class="form-control" placeholder="No Title">
+        </div>
+
+        <!-- Middle: Formatting/Stylization -->
+        <div class="d-flex align-items-center justify-content-between" style="flex: 0 0 60%;">
+          <button class="btn btn-outline-secondary btn-sm me-2" onclick="applyStyle('bold')">B</button>
+          <button class="btn btn-outline-secondary btn-sm me-2" onclick="applyStyle('italic')">I</button>
+          <button class="btn btn-outline-secondary btn-sm me-2" onclick="applyStyle('underline')">U</button>
+          
+          <!-- Predefined Text Colors -->
+          <div class="dropdown me-2">
+            <button class="btn btn-outline-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Text Color
+            </button>
+            <ul class="dropdown-menu">
+              <li><button class="dropdown-item" style="color: red;" onclick="applyStyle('foreColor', 'red')">Red</button></li>
+              <li><button class="dropdown-item" style="color: blue;" onclick="applyStyle('foreColor', 'blue')">Blue</button></li>
+              <li><button class="dropdown-item" style="color: green;" onclick="applyStyle('foreColor', 'green')">Green</button></li>
+              <li><button class="dropdown-item" style="color: black;" onclick="applyStyle('foreColor', 'black')">Black</button></li>
+              <li>
+                <div class="dropdown-item">
+                  <label for="textColorPicker" class="form-label mb-0">More Colors</label>
+                  <input type="color" id="textColorPicker" class="form-control form-control-sm" onchange="applyStyle('foreColor', this.value)">
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Predefined Highlight Colors -->
+          <div class="dropdown me-2">
+            <button class="btn btn-outline-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Highlight
+            </button>
+            <ul class="dropdown-menu">
+              <li><button class="dropdown-item" style="background-color: yellow;" onclick="applyStyle('hiliteColor', 'yellow')">Yellow</button></li>
+              <li><button class="dropdown-item" style="background-color: cyan;" onclick="applyStyle('hiliteColor', 'cyan')">Cyan</button></li>
+              <li><button class="dropdown-item" style="background-color: pink;" onclick="applyStyle('hiliteColor', 'pink')">Pink</button></li>
+              <li><button class="dropdown-item" style="background-color: white;" onclick="applyStyle('hiliteColor', 'white')">None</button></li>
+              <li>
+                <div class="dropdown-item">
+                  <label for="highlightColorPicker" class="form-label mb-0">More Colors</label>
+                  <input type="color" id="highlightColorPicker" class="form-control form-control-sm" onchange="applyStyle('hiliteColor', this.value)">
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Text Size -->
+          <select id="textSizePicker" class="form-select form-select-sm me-2" onchange="applyTextSize()" title="Text Size">
+            <option value="small">Small</option>
+            <option value="normal" selected>Normal</option>
+            <option value="big">Big</option>
+          </select>
+
+          <!-- Numeration -->
+          <button class="btn btn-outline-secondary btn-sm me-2" onclick="applyStyle('insertOrderedList')">1.</button>
+          <button class="btn btn-outline-secondary btn-sm me-2" onclick="applyStyle('insertUnorderedList')">•</button>
+        </div>
+
+        <!-- Right side: Save Button -->
+        <div>
+          <button class="btn btn-success btn-sm" onclick="saveNote()" type="button"><i class="fa-solid fa-floppy-disk"></i> Save</button>
+        </div>
+      </div>
+
+      <!-- Content area -->
+      <div contenteditable="true" id="noteContent" class="form-control" style="height: calc(100vh - 120px); overflow-y: auto;" placeholder="Start writing..."></div>
+    </div>
+
+    <div id="trashBin" class="note-editor">
+    </div>
+
+    <!-- Save Modal -->
+    <div class="modal" id="saveModal" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Save Note</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="mb-3">
+              <label class="form-label">Select a category:</label>
+              <div id="saveModalCategories" class="form-check"></div>
+            </div>
+            
+            <input type="text" id="newCategoryInput" class="form-control mb-2" placeholder="New category name">
+            <button class="btn btn-secondary w-100 mb-2" onclick="addCategory()">Add Category</button>
+            <button class="btn btn-success w-100" onclick="confirmSave()">💾 Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Category Modal -->
+    <div class="modal" id="categoryModal" tabindex="-1">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Notes in Category</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div id="categoryNotes" class="row"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
