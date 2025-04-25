@@ -165,7 +165,7 @@ function renderMainCards() {
                 ⋮
               </button>
               <ul class="dropdown-menu">
-                <li><button class="dropdown-item" onclick="togglePinCategory('${category}')">${isPinned ? 'Unpin Category' : 'Pin Category'}</button></li>
+                <li><button class="dropdown-item" onclick="togglePinCategory('${category}')">${isPinned ? '<i class="fa-solid fa-thumbtack"></i> Unpin Category' : '<i class="fa-solid fa-thumbtack"></i> Pin Category'}</button></li>
                 <li><button class="dropdown-item" onclick="changeCategoryName('${category}')">Change Name</button></li>
                 <li><button class="dropdown-item" onclick="deleteCategory('${category}')">Delete</button></li>
               </ul>
@@ -732,7 +732,7 @@ function showTrash() {
   headerDiv.className = "d-flex justify-content-between align-items-center mb-3";
   
   const header = document.createElement("h4");
-  header.innerHTML = `<i class="fa-solid fa-trash-can"></i> Trash`;
+  header.innerHTML = `<i class="fa-regular fa-trash-can"></i> Trash`;
   headerDiv.appendChild(header);
   
   const clearBtn = document.createElement("button");
@@ -798,7 +798,7 @@ function showTrash() {
                     <i class="fa-solid fa-rotate-left"></i>
                   </button>
                   <button class="btn btn-sm btn-danger" onclick="deletePermanently('note', ${index})">
-                    <i class="fa-solid fa-trash"></i>
+                    <i class="fa-regular fa-trash-can"></i>
                   </button>
                 </div>
               </div>
@@ -841,7 +841,7 @@ function showTrash() {
                     <i class="fa-solid fa-rotate-left"></i>
                   </button>
                   <button class="btn btn-sm btn-danger" onclick="deletePermanently('category', ${index})">
-                    <i class="fa-solid fa-trash"></i>
+                    <i class="fa-regular fa-trash-can"></i>
                   </button>
                 </div>
               </div>

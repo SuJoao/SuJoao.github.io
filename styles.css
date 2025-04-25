@@ -114,5 +114,9 @@ body {
 }
 
 .fa-solid {
-    color: #16599b !important;
+  color: #16599b !important;
+}
+
+.card-footer .btn .fa-solid.fa-rotate-left {
+  color: #ffffff !important;
 }
