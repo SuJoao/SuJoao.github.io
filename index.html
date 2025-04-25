@@ -47,14 +47,20 @@
 
         <!-- Middle: Formatting/Stylization -->
         <div class="d-flex align-items-center justify-content-between" style="flex: 0 0 60%;">
-          <button class="btn btn-outline-secondary btn-sm me-2" onclick="applyStyle('bold')">B</button>
-          <button class="btn btn-outline-secondary btn-sm me-2" onclick="applyStyle('italic')">I</button>
-          <button class="btn btn-outline-secondary btn-sm me-2" onclick="applyStyle('underline')">U</button>
+          <button class="btn btn-outline-secondary btn-sm me-2" onclick="applyStyle('bold')">
+            <i class="fa-solid fa-bold"></i>
+          </button>
+          <button class="btn btn-outline-secondary btn-sm me-2" onclick="applyStyle('italic')">
+            <i class="fa-solid fa-italic"></i>
+          </button>
+          <button class="btn btn-outline-secondary btn-sm me-2" onclick="applyStyle('underline')">
+            <i class="fa-solid fa-underline"></i>
+          </button>
           
           <!-- Predefined Text Colors -->
           <div class="dropdown me-2">
             <button class="btn btn-outline-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Text Color
+              <i class="fa-solid fa-palette"></i> Text Color
             </button>
             <ul class="dropdown-menu">
               <li><button class="dropdown-item" style="color: red;" onclick="applyStyle('foreColor', 'red')">Red</button></li>
@@ -73,7 +79,7 @@
           <!-- Predefined Highlight Colors -->
           <div class="dropdown me-2">
             <button class="btn btn-outline-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Highlight
+              <i class="fa-solid fa-highlighter"></i> Highlight
             </button>
             <ul class="dropdown-menu">
               <li><button class="dropdown-item" style="background-color: yellow;" onclick="applyStyle('hiliteColor', 'yellow')">Yellow</button></li>
@@ -97,8 +103,12 @@
           </select>
 
           <!-- Numeration -->
-          <button class="btn btn-outline-secondary btn-sm me-2" onclick="applyStyle('insertOrderedList')">1.</button>
-          <button class="btn btn-outline-secondary btn-sm me-2" onclick="applyStyle('insertUnorderedList')">•</button>
+          <button class="btn btn-outline-secondary btn-sm me-2" onclick="applyStyle('insertOrderedList')">
+            <i class="fa-solid fa-list-ol"></i>
+          </button>
+          <button class="btn btn-outline-secondary btn-sm me-2" onclick="applyStyle('insertUnorderedList')">
+            <i class="fa-solid fa-list-ul"></i>
+          </button>
         </div>
 
         <!-- Right side: Save Button -->
