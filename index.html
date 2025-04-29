@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
   
 </head>
-<body>
+<body class="sidebar-transition">
   <div class="sidebar">
     <button class="btn btn-outline-primary mb-2" onclick="showMainMenu()"><i class="fa-solid fa-house"></i> Home</button>
     <button class="btn btn-primary mb-2" onclick="newNote()"><i class="fa-solid fa-pencil"></i> New</button>
@@ -125,7 +125,7 @@
     </div>
 
     <!-- Save Modal -->
-    <div class="modal" id="saveModal" tabindex="-1">
+    <div class="modal fade" id="saveModal" tabindex="-1">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
@@ -147,7 +147,7 @@
     </div>
 
     <!-- Category Modal -->
-    <div class="modal" id="categoryModal" tabindex="-1">
+    <div class="modal fade" id="categoryModal" tabindex="-1">
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <div class="modal-header">

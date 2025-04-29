@@ -108,6 +108,10 @@ function openUnsavedNote() {
 }
 
 function showMainMenu() {
+  const sidebar = document.querySelector('.sidebar');
+  if (sidebar.classList.contains('collapsed')) {
+    sidebar.classList.remove('collapsed'); // Ensure the sidebar remains visible
+  }
   document.getElementById("mainMenu").style.display = "block";
   document.getElementById("categoryNotesView").style.display = "none";
   document.getElementById("noteEditor").style.display = "none";
@@ -1389,3 +1393,14 @@ function confirmSave() {
 updateTabs();
 renderMainCards();
 showMainMenu();
+
+function toggleSidebar() {
+  const sidebar = document.querySelector('.sidebar');
+  sidebar.classList.toggle('collapsed');
+}
+
+document.querySelectorAll('.modal').forEach(modal => {
+  modal.addEventListener('show.bs.modal', () => {
+    modal.classList.add('fade');
+  });
+});
