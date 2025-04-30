@@ -4,6 +4,7 @@ let trash = JSON.parse(localStorage.getItem("trash") || "[]");
 let selectedCategory = "";
 let unsavedNote = null; // unsaved note variable
 let openTabs = []; // new array tracking saved note tabs that are open
+let autosaveTimer;
 
 function stripHtml(html) {
   var tempDiv = document.createElement("div");
@@ -287,7 +288,7 @@ function filterFavorites() {
             <i class="fa-solid fa-file-lines"></i> Note
           </div>
           <div class="card-body" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis; white-space: normal; word-wrap: break-word; word-break: break-word; hyphens: auto; text-align: left;">
-            ${noteContentPreview}
+              ${noteContentPreview}
           </div>
           <div class="card-footer text-muted">
             <div class="d-flex justify-content-between align-items-center w-100">
@@ -685,6 +686,17 @@ function highlightSelectedCategory(category) {
   });
 }
 
+function showAutosaveFeedback() {
+    const indicator = document.getElementById("autosaveFeedback");
+    if (indicator) {
+        indicator.innerHTML = '<span class="loading-spinner"></span> Autosaving...';
+        indicator.style.display = "block";
+        setTimeout(() => {
+            indicator.style.display = "none";
+        }, 1500);
+    }
+}
+
 document.getElementById("noteContent").addEventListener("input", () => {
   if (currentTab !== null) {
     if (currentTab === "unsaved") {
@@ -694,6 +706,12 @@ document.getElementById("noteContent").addEventListener("input", () => {
     }
     localStorage.setItem("notes", JSON.stringify(notes));
     updateTabs();
+    clearTimeout(autosaveTimer); 
+    if (currentTab !== "unsaved") { 
+      autosaveTimer = setTimeout(() => {
+        showAutosaveFeedback();
+      }, 5000);
+    }
   }
 });
 
@@ -706,6 +724,12 @@ document.getElementById("noteTitle").addEventListener("input", () => {
     }
     localStorage.setItem("notes", JSON.stringify(notes));
     updateTabs();
+    clearTimeout(autosaveTimer); 
+    if (currentTab !== "unsaved") { 
+      autosaveTimer = setTimeout(() => {
+        showAutosaveFeedback();
+      }, 5000);
+    }
   }
 });
 
